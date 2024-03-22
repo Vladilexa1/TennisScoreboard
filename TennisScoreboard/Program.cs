@@ -1,3 +1,7 @@
+using Microsoft.EntityFrameworkCore;
+using TennisScoreboard.Data;
+using Microsoft.EntityFrameworkCore.Design;
+
 namespace TennisScoreboard
 {
     public class Program
@@ -9,6 +13,11 @@ namespace TennisScoreboard
             // Add services to the container.
 
             builder.Services.AddControllers();
+
+            builder.Services.AddDbContext<TennisScoreboardContext>(options =>
+            {
+                options.UseSqlite(builder.Configuration.GetConnectionString("SQLite"));
+            });
 
             var app = builder.Build();
 
