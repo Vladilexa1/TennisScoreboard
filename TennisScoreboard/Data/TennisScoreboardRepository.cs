@@ -14,6 +14,13 @@ namespace TennisScoreboard.Data
         {
             return await _dbContext.Players.ToListAsync();
         }
+        public async Task<Player> GetPlayer(string name)
+        {
+            return await _dbContext.Players
+                .Where(p => p.Name.Equals(name))
+                .FirstOrDefaultAsync() 
+                ?? throw new Exception();
+        }
         public async Task<Player> GetPlayer(int id) // write castom exception
         {
             return await _dbContext.Players
@@ -54,5 +61,6 @@ namespace TennisScoreboard.Data
                      .Take(pageSize)
                      .ToListAsync();
         }
+
     }
 }
