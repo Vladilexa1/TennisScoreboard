@@ -1,31 +1,18 @@
 ﻿using System.Reflection;
+using TennisScoreboard.Data;
 using TennisScoreboard.Models;
 
 namespace TennisScoreboard.Services
 {
-    public class MatchScoreCalculationService
+    public class MatchScoreCalculationService : IMatchScoreCalculationService
     {
         private MatchScore matchScore;
         private bool TieBreackIsStarted = false;
-        private bool IsWinnerDeterminate = false;
-        public MatchScoreCalculationService(MatchScore matchScore)
+        public MatchScore AddPointForPlayer(MatchScore matchScore, int id)
         {
+            var playerScore = matchScore.GetPlayerScoreForId(id);
             this.matchScore = matchScore;
-        }
-        public MatchScore AddPointForPlayer(Player player)
-        {
-            var playerScore = matchScore.GetPlayerScoreForId(player.Id);
             AddPoint(playerScore);
-            if (IsWinnerDeterminate)
-            {
-                Match match = new Match
-                {
-                    Player1Id = matchScore.Player1Score.Id,
-                    Player2Id = matchScore.Player2Score.Id,
-                    WinnerId = matchScore.WinnerId
-                };
-                EndMatch(match);
-            }
             return matchScore;
         }
         private void AddPoint(PlayerScore playerScore)
@@ -63,11 +50,6 @@ namespace TennisScoreboard.Services
             playerScore.Set += 1;
             ResetAllPoint();
             ResetAllGame();
-            if (playerScore.Set == 2)
-            {
-                matchScore.WinnerId = playerScore.Id;
-                IsWinnerDeterminate = true;
-            }
         }
         private void ResetAllPoint()
         {
@@ -78,11 +60,6 @@ namespace TennisScoreboard.Services
         {
             matchScore.Player1Score.Game = 0;
             matchScore.Player2Score.Game = 0;
-        }
-        private async void EndMatch(Match match)
-        {
-            FinishedMatchesPersistenceService finishedMatchesPersistenceService = new FinishedMatchesPersistenceService();
-            await finishedMatchesPersistenceService.SaveEndedMatch(match);
         }
     }
 }
