@@ -21,7 +21,6 @@ namespace TennisScoreboard.Controllers
         }
         [HttpPost("{id}")]
         public ActionResult AddPoint(int id,
-            IOngoingMatchesService ongoingMatchesService,
             IMatchScoreCalculationService calculationService, 
             IFinishedMatchesPersistenceService finishedService)
         {
@@ -30,8 +29,8 @@ namespace TennisScoreboard.Controllers
             if (currentMatchScore.Player1Score.Set == 2 || currentMatchScore.Player2Score.Set == 2)
             {
                 finishedService.SaveEndedMatch(currentMatchScore);
+                currentMatchScore = null;
             }
-
 
             return Ok(matchScore);
         } 
