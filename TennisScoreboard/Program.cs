@@ -26,7 +26,7 @@ namespace TennisScoreboard
             builder.Services.AddScoped<IOngoingMatchesService, OngoingMatchesService>();
             builder.Services.AddScoped<IMatchScoreCalculationService, MatchScoreCalculationService>();
             builder.Services.AddScoped<IPlayerSerise, PlayerSerise>();
-            builder.Services.AddScoped<IMatchesService, MatchesService>();
+
 
             var app = builder.Build();
 

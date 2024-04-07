@@ -1,3 +1,0 @@
-﻿Read to create new Excheption;
-
-1. Write new exetpion for Repository;
