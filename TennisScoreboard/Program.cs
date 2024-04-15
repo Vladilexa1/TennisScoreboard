@@ -20,13 +20,7 @@ namespace TennisScoreboard
                 options.UseSqlite(builder.Configuration.GetConnectionString("SQLite"));
             });
 
-            builder.Services.AddScoped<IMatchRepository, TennisScoreboardRepository>();
-            builder.Services.AddScoped<IPlayerRepository, TennisScoreboardRepository>();
-            builder.Services.AddScoped<IFinishedMatchesPersistenceService, FinishedMatchesPersistenceService>();
-            builder.Services.AddScoped<IOngoingMatchesService, OngoingMatchesService>();
-            builder.Services.AddScoped<IMatchScoreCalculationService, MatchScoreCalculationService>();
-            builder.Services.AddScoped<IPlayerSerise, PlayerSerise>();
-            builder.Services.AddScoped<IMatchesService, MatchesService>();
+            RegistryService(builder);
 
             var app = builder.Build();
 
@@ -41,6 +35,16 @@ namespace TennisScoreboard
             app.MapControllers();
 
             app.Run();
+        }
+        public static void RegistryService(WebApplicationBuilder builder)
+        {
+            builder.Services.AddScoped<IMatchRepository, TennisScoreboardRepository>();
+            builder.Services.AddScoped<IPlayerRepository, TennisScoreboardRepository>();
+            builder.Services.AddScoped<IFinishedMatchesPersistenceService, FinishedMatchesPersistenceService>();
+            builder.Services.AddScoped<IOngoingMatchesService, OngoingMatchesService>();
+            builder.Services.AddScoped<IMatchScoreCalculationService, MatchScoreCalculationService>();
+            builder.Services.AddScoped<IPlayerSerise, PlayerSerise>();
+            builder.Services.AddScoped<IMatchesService, MatchesService>();
         }
     }
 }

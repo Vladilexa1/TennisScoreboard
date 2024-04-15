@@ -16,20 +16,24 @@ Accept: application/json
 POST {{TennisScoreboard_HostAddress}}/new-match/
 Content-Type: application/x-www-form-urlencoded
 
-playerName1=Vladislav&playerName2=Vlad
+playerName1=Misha&playerName2=Igor
 ###
 POST {{TennisScoreboard_HostAddress}}/match-score/1
-Content-Type: application/x-www-form-urlencoded
+Accept: aplication/json
 
-id=1
 ###
-POST {{TennisScoreboard_HostAddress}}/match-score/2
-Content-Type: application/x-www-form-urlencoded
+POST {{TennisScoreboard_HostAddress}}/match-score/5
+Accept: aplication/json
 
-id=2
 ###
+GET {{TennisScoreboard_HostAddress}}/matches?playerName=Vladislav&page=1
+Accept: aplication/json
 
+###
+GET {{TennisScoreboard_HostAddress}}/matches
+Accept: aplication/json
 
+###
 
 POST {{TennisScoreboard_HostAddress}}/new-match/
 Content-Type: application/x-www-form-urlencoded
