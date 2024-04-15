@@ -62,5 +62,15 @@ namespace TennisScoreboard.Data
                      .ToListAsync();
         }
 
+        public async Task<List<Match>> GetMatchByPageForPlayerName(int page, int pageSize, string playerName)
+        {
+            var player = await GetPlayer(playerName);
+            return await _dbContext.Matches
+                      .Where(p => p.Player1Id == player.Id || p.Player2Id == player.Id)
+                      .AsNoTracking()
+                      .Skip((page - 1) * pageSize)
+                      .Take(pageSize)
+                      .ToListAsync();
+        }
     }
 }

@@ -18,5 +18,10 @@ namespace TennisScoreboard.Services
         {
             return _matchRepository.GetMatchByPage(page, pageSize).Result;
         }
+
+        public List<Match> GetMatchByPageForPlayerName(int page, int pageSize, string playerName)
+        {
+            return _matchRepository.GetMatchByPageForPlayerName(page, pageSize, playerName).Result;
+        }
     }
 }
