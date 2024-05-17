@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using TennisScoreboard.Data;
-using Microsoft.EntityFrameworkCore.Design;
 using TennisScoreboard.Services;
 
 namespace TennisScoreboard
@@ -11,9 +10,7 @@ namespace TennisScoreboard
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-
-            builder.Services.AddControllers();
+            builder.Services.AddControllersWithViews();
 
             builder.Services.AddDbContext<TennisScoreboardContext>(options =>
             {
@@ -24,15 +21,15 @@ namespace TennisScoreboard
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
             using var scope = app.Services.CreateScope();
             
             app.UseHttpsRedirection();
-
+            app.UseStaticFiles();
             app.UseAuthorization();
 
-
-            app.MapControllers();
+            app.MapControllerRoute(
+              name: "default",
+              pattern: "{controller=HomePage}/{action=StartView}");
 
             app.Run();
         }
