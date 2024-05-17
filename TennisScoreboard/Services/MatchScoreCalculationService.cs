@@ -41,7 +41,7 @@ namespace TennisScoreboard.Services
         private void Tiebreak(PlayerScore playerScore)
         {
             playerScore.Point += 1;
-            if (playerScore.Point == 7)
+            if (playerScore.Point >= 7 && Math.Abs(matchScore.Player1Score.Point - matchScore.Player2Score.Point) >= 2)
             {
                 AddSet(playerScore);
                 TieBreackIsStarted = false;
