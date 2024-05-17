@@ -11,7 +11,7 @@ namespace TennisScoreboard.Services
         {
             _matchRepository = matchRepository;
         }
-        public async Task<Match> SaveEndedMatch(MatchScore matchScore)
+        public async Task<Match> SaveEndedMatch(MatchScore matchScore, Guid guid)
         {
             Match match = new Match
             {
@@ -20,6 +20,8 @@ namespace TennisScoreboard.Services
                 WinnerId = matchScore.WinnerId
             };
             await _matchRepository.AddNewMatch(match);
+            IOngoingMatchesService matchesService = new OngoingMatchesService();
+            matchesService.DeleteMatch(guid);
             return match;
         }
         
