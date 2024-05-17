@@ -1,0 +1,36 @@
+﻿@model TennisScoreboard.Contracts.MatchScoreContracts
+@{
+    Layout = "_Layout";
+}
+<div class="window">
+    <div class="window-score" id="window-score">
+        <table class="score-table" id="scoreTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>S</th>
+                    <th>G</th>
+                    <th>P</th>
+                    <th>Add point</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+                <tr>
+                    <td class="tds">@Model.PlayerScore1.Name</td>
+                    <td class="tds">@Model.PlayerScore1.Set</td>
+                    <td class="tds">@Model.PlayerScore1.Game</td>
+                    <td class="tds">@Model.PlayerScore1.Point</td>
+                    <td class="tds"><button class="button-point" id="firstGamer" data-id="@Model.PlayerScore1.Id">+POINT</button></td>
+                </tr>
+                <tr>
+                    <td class="tds">@Model.PlayerScore2.Name</td>
+                    <td class="tds">@Model.PlayerScore2.Set</td>
+                    <td class="tds">@Model.PlayerScore2.Game</td>
+                    <td class="tds">@Model.PlayerScore2.Point</td>
+                    <td class="tds"><button class="button-point" id="secondGamer" data-id="@Model.PlayerScore2.Id">+POINT</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script src="~/js/JavaScript.js"></script>

@@ -1,0 +1,45 @@
+﻿@model List<TennisScoreboard.Contracts.MatchesResponse>
+@{
+    Layout = "_Layout";
+}
+<div class="window window-matches">
+    <div class="search-panel">
+        <div class="searchText">Search for player name</div>
+        <div class="search-input">
+            <input id="inputName"/> 
+            <button class="button-search" id="searchButton">search</button>
+        </div>
+    </div>
+    <table id="table">
+        <thead>
+            <tr>
+                <th>
+                    Name player 1
+                </th>
+                <th>
+                    Name player 2
+                </th>
+                <th>
+                    Winner
+                </th>
+            </tr>
+        </thead>
+        <tbody class="matches" id="table-body">
+            @foreach (var matches in Model)
+            {
+                <tr>
+                    <td class="tds">@matches.playerName1</td>
+                    <td class="tds">@matches.playerName2</td>
+                    <td class="tds">@matches.WinnerName</td>
+                </tr>
+            }
+            <tr>
+                <td class="clear" id="previousPageTd"></td>
+                <td class="clear"></td>
+                <td class="clear" id="nextPageTd"></td>
+            </tr>
+        </tbody>
+    </table>
+   
+</div>
+<script src="~/js/matches.js"></script>

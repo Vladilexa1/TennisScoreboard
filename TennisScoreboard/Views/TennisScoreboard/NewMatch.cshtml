@@ -1,0 +1,23 @@
+﻿@model TennisScoreboard.Contracts.NewMatchRequest
+@{
+    Layout = "_Layout";
+}
+<form asp-action="NewMatch" method="post">
+        <div class="window">
+            <div class="input-block">
+                <div class="input-text">
+                    Player name 1  
+                    <div>
+                        <input asp-for="playerName1" />
+                    </div>
+                </div>
+                <div class="input-text">
+                    Player name 2  
+                    <div>
+                        <input asp-for="playerName2" />
+                    </div>
+                </div>
+            </div>
+            <button action="submit" class="button-GO">GO</button>
+        </div>
+</form>
