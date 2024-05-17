@@ -6,5 +6,6 @@ namespace TennisScoreboard.Services
     {
         Guid StartMatch(Player player1, Player player2);
         MatchScore GetMatchForDictionary(Guid guid);
+        void DeleteMatch(Guid guid);
     }
 }

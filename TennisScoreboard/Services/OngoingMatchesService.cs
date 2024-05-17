@@ -23,6 +23,10 @@ namespace TennisScoreboard.Services
                 throw new Exception();
             }
         }
+        public void DeleteMatch(Guid guid)
+        {
+            matches.Remove(guid);
+        }
         public MatchScore GetMatchForDictionary(Guid guid)
         {
             matches.TryGetValue(guid, out MatchScore matchScore);
