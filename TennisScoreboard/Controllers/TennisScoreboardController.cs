@@ -10,15 +10,20 @@ namespace TennisScoreboard.Controllers
 {
     [ApiController]
     [Route("/new-match")]
-    public class TennisScoreboardController : ControllerBase
+    public class TennisScoreboardController : Controller
     {
+        [HttpGet]
+        public IActionResult StartView()
+        {
+            return View("NewMatch");
+        }
         [HttpPost]
         public ActionResult NewMatch([FromForm] NewMatchRequest matchRequest, 
             IOngoingMatchesService ongoingMatchesService, IPlayerSerise playerSerise)
         {
             var player1 = playerSerise.GetPlayerByName(matchRequest.playerName1);
             var player2 = playerSerise.GetPlayerByName(matchRequest.playerName2);
-            var guidMatch = ongoingMatchesService.StartMatch(player1, player2); // redirect
+            var guidMatch = ongoingMatchesService.StartMatch(player1, player2); 
 
             return Redirect($"/match-score?guid={guidMatch}");
         }
