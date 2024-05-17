@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Configuration.UserSecrets;
 using TennisScoreboard.Contracts;
 using TennisScoreboard.Models;
@@ -9,7 +10,7 @@ namespace TennisScoreboard.Controllers
 {
     [ApiController]
     [Route("/matches")]
-    public class MatchesController : ControllerBase
+    public class MatchesController : Controller
     {
         public const int PAGE_SIZE = 5;
         [HttpGet]
@@ -17,13 +18,20 @@ namespace TennisScoreboard.Controllers
         {
             List<Match> matches = new();
             List<MatchesResponse> result = new();
-            if (!String.IsNullOrEmpty(playerName))
+            try
             {
-                 matches = matchService.GetMatchByPageForPlayerName(page, PAGE_SIZE, playerName);
+                if (!String.IsNullOrEmpty(playerName))
+                {
+                    matches = matchService.GetMatchByPageForPlayerName(page, PAGE_SIZE, playerName);
+                }
+                else
+                {
+                    matches = matchService.GetMatchByPage(page, PAGE_SIZE);
+                }
             }
-            else
+            catch (Exception)
             {
-                matches = matchService.GetMatchByPage(page, PAGE_SIZE);
+                return StatusCode(404);
             }
             foreach (var item in matches)
             {
@@ -36,7 +44,15 @@ namespace TennisScoreboard.Controllers
                         playerSerise.GetPlayerById(item.WinnerId).Name)
                     );
             }
-            return Ok(result);
+            if (result.Count == 0)
+            {
+                return StatusCode(404); // TODO: изменить статус код
+            }
+            if (page < 1)
+            {
+                return StatusCode(404);
+            }
+            return View("Matches", result);
         }
     }
 }
