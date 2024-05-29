@@ -1,24 +1,22 @@
 ﻿const uri = 'http://localhost:5052';
 
-let playerName = '';
+
 
 let searchButton = document.getElementById('searchButton');
 
 let currentUrl = window.location.href;
 let urlParams = new URLSearchParams(new URL(currentUrl).search);
 let pageValue = parseInt(urlParams.get('page'));
+let playerName = urlParams.get('playerName');
 let previousPageTd = document.getElementById('previousPageTd');
 let nextPageTd = document.getElementById('nextPageTd');
+
+
 nextButtonWriter();
 previousButtonWriter();
+
 let nextPage = document.getElementById('nextPage');
-nextPage.addEventListener("click", (e) => {
-    pageValue++;
-    openPage()
-        .then(response => {
-            console.log(response);
-        });
-});
+
 searchButton.addEventListener("click", (e) => {
     let inputName = document.getElementById('inputName');
     playerName = inputName.value;
@@ -29,16 +27,7 @@ searchButton.addEventListener("click", (e) => {
         });
 });
 function nextButtonWriter() {
-    if (hasDataInTable()) { // если таблица меньше 7, кнопку не рисуем
-        nextPageTd.innerHTML = ''
-        nextPageTd.className = ''
-        let nextPage = document.createElement('button');
-        nextPage.className = 'button-nextPage';
-        nextPage.id = 'nextPage';
-        nextPage.textContent = '>';
-        nextPageTd.appendChild(nextPage);
-        return;
-    }
+    
     fetch(`${uri}/matches?playerName=${playerName}&page=${pageValue + 1}`, {
         method: 'GET',
         headers: {
@@ -54,6 +43,13 @@ function nextButtonWriter() {
             nextPage.id = 'nextPage';
             nextPage.textContent = '>';
             nextPageTd.appendChild(nextPage);
+            nextPage.addEventListener("click", (e) => {
+                pageValue++;
+                openPage()
+                    .then(response => {
+                        console.log(response);
+                    });
+            });
         }
     });
 }

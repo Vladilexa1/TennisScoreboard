@@ -87,7 +87,7 @@ namespace TennisScoreboard.Tests
             {
                 matchScoreCalculationService.AddPointForPlayer(matchScore, id2);
             }
-            var actual = MatchScoreCalculationService.TieBreackIsStarted;
+            var actual = matchScoreCalculationService.TieBreackIsStarted(matchScore);
 
             Assert.AreEqual(expected, actual);
         }

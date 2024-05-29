@@ -3,18 +3,23 @@ let firstGamer = document.getElementById('firstGamer');
 let secondGamer = document.getElementById('secondGamer');
 
 let table = document.getElementById('scoreTable');
+let currentUrl = window.location.href;
+let urlParams = new URLSearchParams(new URL(currentUrl).search);
+let guid = urlParams.get('guid');
+
+
 
 function addPoint(buttonValue) {
+    const params = new URLSearchParams();
+    params.append('id', buttonValue);
 
-    const item = {
-    };
-
-    fetch(`${uri}/match-score/${buttonValue}`, {
+    fetch(`${uri}/match-score?guid=${guid}`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: params.toString()
     })
         .then(response => response.json())
         .then(data => _displayItems(data))
