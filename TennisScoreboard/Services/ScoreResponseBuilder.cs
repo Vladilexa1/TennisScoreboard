@@ -7,6 +7,7 @@ namespace TennisScoreboard.Services
     {
         public ScoreResponseBuilder(MatchScore score, string namePlayer1, string namePlayer2)
         {
+            MatchScoreCalculationService matchScoreCalculationService = new MatchScoreCalculationService();
             PlayerScore1 = new PlayerScoreContracts
             {
                 Id = score.Player1Score.Id,
@@ -21,7 +22,7 @@ namespace TennisScoreboard.Services
                 Game = score.Player2Score.Game,
                 Set = score.Player2Score.Set
             };
-            if (!MatchScoreCalculationService.TieBreackIsStarted)
+            if (!matchScoreCalculationService.TieBreackIsStarted(score))
             {
                 ConvertPoint(score);
             }

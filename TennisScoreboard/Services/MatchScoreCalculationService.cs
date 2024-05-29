@@ -7,7 +7,6 @@ namespace TennisScoreboard.Services
     public class MatchScoreCalculationService : IMatchScoreCalculationService
     {
         private MatchScore matchScore;
-        public static bool TieBreackIsStarted = false;
         public MatchScore AddPointForPlayer(MatchScore matchScore, int id)
         {
             var playerScore = matchScore.GetPlayerScoreForId(id);
@@ -17,7 +16,7 @@ namespace TennisScoreboard.Services
         }
         private void AddPoint(PlayerScore playerScore)
         {
-            if (TieBreackIsStarted)
+            if (TieBreackIsStarted(matchScore))
             {
                 Tiebreak(playerScore);
                 return;
@@ -32,11 +31,14 @@ namespace TennisScoreboard.Services
             {
                 AddSet(playerScore);
             }
+        }
+        public bool TieBreackIsStarted(MatchScore matchScore)
+        {
             if (matchScore.Player1Score.Game == 6 && matchScore.Player2Score.Game == 6)
             {
-                TieBreackIsStarted = true;
-                ResetAllPoint();
+                return true;
             }
+            return false;
         }
         private void Tiebreak(PlayerScore playerScore)
         {
@@ -44,7 +46,6 @@ namespace TennisScoreboard.Services
             if (playerScore.Point >= 7 && Math.Abs(matchScore.Player1Score.Point - matchScore.Player2Score.Point) >= 2)
             {
                 AddSet(playerScore);
-                TieBreackIsStarted = false;
             }
         }
         private void AddSet(PlayerScore playerScore)
